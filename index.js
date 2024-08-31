@@ -1,4 +1,6 @@
 const { Telegraf, Markup, session } = require('telegraf');
+const express = require("express");
+const web = express();
 
 // Замените 'YOUR_BOT_TOKEN' на токен вашего бота
 const bot = new Telegraf('7342606736:AAEFfDFGlsiLlir3chArPJGmASvrW_m_0Yw');
@@ -20,7 +22,7 @@ bot.start((ctx) => {
         Markup.inlineKeyboard([
             [Markup.button.callback('MPOS', 'MPOS_GAME')],
             [Markup.button.callback('MPUS', 'MPUS_GAME')],
-            [Markup.button.callback('Mitrash', 'MITRASH_GAME')],
+            [Markup.button.callback('PiuTown', 'PIUTOWN_GAME')],
             [Markup.button.callback('Mixi Click', 'MC_APP')],
         ])
     );
@@ -41,9 +43,9 @@ bot.action('MPUS_GAME', (ctx) => {
     ctx.reply('Вы выбрали игру MPUS. Что вы хотели бы предложить или рассказать?', gameOptions);
 });
 
-bot.action('MITRASH_GAME', (ctx) => {
-    ctx.session.selectedGame = 'Mitrash';
-    ctx.reply('Вы выбрали игру Mitrash. Что вы хотели бы предложить или рассказать?', gameOptions);
+bot.action('PIUTOWN_GAME', (ctx) => {
+    ctx.session.selectedGame = 'PiuTown';
+    ctx.reply('Вы выбрали игру PiuTown. Что вы хотели бы предложить или рассказать?', gameOptions);
 });
 
 bot.action('MC_APP', (ctx) => {
@@ -90,5 +92,8 @@ bot.action('SEND_TO_AUTHOR', (ctx) => {
     }
 });
 
-bot.launch();
-console.log('Бот запущен');
+
+web.listen(7005, ()=>{
+    bot.launch();
+    console.log('Бот запущен');
+});
